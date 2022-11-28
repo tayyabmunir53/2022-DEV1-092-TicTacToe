@@ -16,4 +16,19 @@ public class GameApiController {
         return "Welcome to tik tac toe, X will take first turn";
     }
 
+
+    @GetMapping(path = "/playturn",  produces = "application/json")
+    public TurnResponse playTurn() {
+        System.out.println("PostRequest Landed");
+        TurnResponse turnResponse = new TurnResponse();
+        turnResponse.setResponseCode("00");
+        turnResponse.setResponseDescription("");
+        turnResponse.setOutputBoard("----------------%%%%%%%%%%%%%%%---------------");
+        if (isXturn){
+            isXturn = false;
+        }
+        else isXturn = true;
+        return turnResponse;
+    }
+
 }
