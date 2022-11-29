@@ -19,14 +19,21 @@ public class DemoApplicationTests {
 
 	@Test
 	public void testPlayTurnAPI() throws Exception {
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/start",
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
 				String.class)).contains("Welcome to tik tac toe, X will take first turn");
 	}
 
 	@Test
 	public void testStartAPI() throws Exception {
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
-				String.class)).contains("{\"outputBoard\":\"----------------%%%%%%%%%%%%%%%---------------\",\"responseCode\":\"00\",\"responseDescription\":\"\"}");
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/start",
+				String.class)).contains("Welcome to tik tac toe, X will take first turn\n" +
+				"|---|---|---|\n" +
+				"| 1 | 2 | 3 |\n" +
+				"|-----------|\n" +
+				"| 4 | 5 | 6 |\n" +
+				"|-----------|\n" +
+				"| 7 | 8 | 9 |\n" +
+				"|---|---|---|");
 	}
 
 }
