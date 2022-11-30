@@ -1,6 +1,9 @@
 package com.tictaktoe.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -8,6 +11,7 @@ public class GameApiController {
 
     private boolean isXturn = true;
     private int  turnNumber = 0;
+    private static final Logger logger = LoggerFactory.getLogger(GameApiController.class);
 
     String[] board = new String[9];
     private String turn;
@@ -35,16 +39,50 @@ public class GameApiController {
 
 
     @GetMapping(path = "/playturn",  produces = "application/json")
-    public TurnResponse playTurn() {
-        System.out.println("PostRequest Landed");
+    //?turn=1
+    public TurnResponse playTurn(@RequestParam(value = "turn", defaultValue = "0") String turn) {
+
         TurnResponse turnResponse = new TurnResponse();
         turnResponse.setResponseCode("00");
-        turnResponse.setResponseDescription("");
-        turnResponse.setOutputBoard("----------------%%%%%%%%%%%%%%%---------------");
+
+        logger.info("Request Landed");
+        logger.info("turn Value is:" + turn);
+        //
+            Utility.turn(board, isXturn ? "X" : "Y", Integer.parseInt(turn));
+        //
+        String winner = null;
+        if(turnNumber >= 4){
+        winner =  Utility.checkWinner(board);
+        }
+
+        if (winner != null) {
+            if (winner.equalsIgnoreCase("x")) {
+                turnResponse.setResponseCode("02");
+                turnResponse.setResponseDescription("X Wins");
+                return  turnResponse;
+            } else if (winner.equalsIgnoreCase("y")) {
+                turnResponse.setResponseCode("03");
+                turnResponse.setResponseDescription("Y Wins");
+                return  turnResponse;
+            } else if (winner.equalsIgnoreCase("draw")) {
+                turnResponse.setResponseCode("01");
+                turnResponse.setResponseDescription("draw");
+                return  turnResponse;
+            }
+        }
+
+
+
+        turnResponse.setOutputBoard(Utility.printBoard(board));
+        turnResponse.setTurnNumber(String.valueOf(turnNumber+= 1));
         if (isXturn){
             isXturn = false;
+            turnResponse.setResponseDescription("Y Turn");
         }
-        else isXturn = true;
+        else{
+            isXturn = true;
+            turnResponse.setResponseDescription("X Turn");
+        }
         return turnResponse;
     }
 

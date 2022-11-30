@@ -1,5 +1,7 @@
 package com.tictaktoe.demo;
 
+import org.springframework.context.annotation.Description;
+
 public class TurnResponse {
 
     public TurnResponse() {
@@ -14,6 +16,15 @@ public class TurnResponse {
     private String outputBoard;
     private String responseCode;
     private String responseDescription;
+    private String turnNumber;
+
+    public String getTurnNumber() {
+        return turnNumber;
+    }
+
+    public void setTurnNumber(String turnNumber) {
+        this.turnNumber = turnNumber;
+    }
 
     public void setOutputBoard(String outputBoard) {
         this.outputBoard = outputBoard;

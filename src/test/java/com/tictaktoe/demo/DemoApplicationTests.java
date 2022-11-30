@@ -23,6 +23,49 @@ public class DemoApplicationTests {
 				String.class)).contains("Welcome to tik tac toe, X will take first turn");
 	}
 
+
+	@Test
+	public void testCheckAuthenticityOfTurns() throws Exception {
+
+
+	}
+
+	@Test
+	public void testPlayTurnAPITestTurns() throws Exception {
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
+				TurnResponse.class).getTurnNumber()).isEqualTo("1");
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
+				TurnResponse.class).getTurnNumber()).isEqualTo("2");
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
+				TurnResponse.class).getTurnNumber()).isEqualTo("3");
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
+				TurnResponse.class).getTurnNumber()).isEqualTo("4");
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
+				TurnResponse.class).getTurnNumber()).isEqualTo("5");
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
+				TurnResponse.class).getTurnNumber()).isEqualTo("6");
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
+				TurnResponse.class).getTurnNumber()).isEqualTo("7");
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
+				TurnResponse.class).getTurnNumber()).isEqualTo("8");
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
+				TurnResponse.class).getTurnNumber()).isEqualTo("9");
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn",
+				TurnResponse.class).getResponseDescription()).isEqualTo("Error board full");
+	}
+
+
+
 	@Test
 	public void testStartAPI() throws Exception {
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/start",
