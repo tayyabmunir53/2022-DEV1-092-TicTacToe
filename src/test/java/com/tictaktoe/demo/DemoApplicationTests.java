@@ -28,8 +28,12 @@ public class DemoApplicationTests {
 
 
 	@Test
-	public void testCheckAuthenticityOfTurns() throws Exception {
+	public void testCheckInputValidation() throws Exception {
+		TurnResponse turnResponse =	this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=x",
+				TurnResponse.class);
 
+		assertThat(turnResponse.getResponseCode().toString()).isEqualTo("INVALID_INPUT");
+		assertThat(turnResponse.getResponseDescription()).isEqualTo("Please Enter a valid input between 1 to 9");
 
 	}
 

@@ -1,5 +1,6 @@
 package com.tictaktoe.demo;
 
+import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Description;
@@ -15,6 +16,7 @@ public class GameApiController {
     private boolean isXturn = true;
     private int  turnNumber = 0;
     private static final Logger logger = LoggerFactory.getLogger(GameApiController.class);
+    private final Pattern patternSingleDigitNumeric = Pattern.compile("^[1-9]{1}$");
 
     String[] board = new String[9];
     private String turn;
@@ -44,18 +46,26 @@ public class GameApiController {
 
         TurnResponse turnResponse = new TurnResponse();
         turnResponse.setResponseCode(ResponseCode.OK);
-            if(turnNumber == 0){
-                Utility.resetBoard(this.board);
-            }
+        if(turnNumber == 0){
+            Utility.resetBoard(this.board);
+        }
         logger.info("Request Landed");
         logger.info("turn Value is:" + turn);
+        //
+        if(!Pattern.matches(patternSingleDigitNumeric.toString(), turn)){
+            turnResponse.setResponseCode(ResponseCode.INVALID_INPUT);
+            turnResponse.setResponseDescription(CommonConstants.ResponseDescriptions.INVALID_INPUT);
+            turnResponse.setOutputBoard(Utility.printBoard(board));
+            turnResponse.setTurnNumber(String.valueOf(turnNumber));
+            return turnResponse;
+        }
         //
         try {
             Utility.turn(board, isXturn ? "X" : "Y", Integer.parseInt(turn));
         } catch (InternalError e){
 
             turnResponse.setResponseCode(ResponseCode.INTERNAL_ERROR);
-            turnResponse.setResponseDescription("This Slot is already Taken, please pick another Slot");
+            turnResponse.setResponseDescription(CommonConstants.ResponseDescriptions.SLOT_ALREADY_TAKEN);
             turnResponse.setOutputBoard(Utility.printBoard(board));
             turnResponse.setTurnNumber(String.valueOf(turnNumber));
             return turnResponse;

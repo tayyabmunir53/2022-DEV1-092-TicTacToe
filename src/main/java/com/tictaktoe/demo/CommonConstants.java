@@ -7,6 +7,8 @@ public interface CommonConstants {
         String X_TURN = "X Turn";
         String Y_TURN = "Y Turn";
         String DRAW = "draw";
+        String INVALID_INPUT = "Please Enter a valid input between 1 to 9";
+        String SLOT_ALREADY_TAKEN = "This Slot is already Taken, please pick another Slot";
     }
 
     interface Winner{
