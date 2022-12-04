@@ -20,15 +20,6 @@ public class DemoApplicationTests {
 	@Test
 	public void testPlayTurnAPI() throws Exception {
 
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/start",
-				String.class)).contains("Welcome to tik tac toe, X will take first turn\n" +
-				"|---|---|---|\n" +
-				"| 1 | 2 | 3 |\n" +
-				"|-----------|\n" +
-				"| 4 | 5 | 6 |\n" +
-				"|-----------|\n" +
-				"| 7 | 8 | 9 |\n" +
-				"|---|---|---|");
 
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=6",
 				String.class)).contains("{\"outputBoard\":\"|---|---|---|\\n| 1 | 2 | 3 |\\n|-----------|\\n| 4 | 5 | X |\\n|-----------|\\n| 7 | 8 | 9 |\\n|---|---|---|\",\"responseCode\":\"00\",\"responseDescription\":\"Y Turn\",\"turnNumber\":\"1\"}");
@@ -45,15 +36,6 @@ public class DemoApplicationTests {
 	public void testPlayTurnAPITestTurns() throws Exception {
 
 
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/start",
-				String.class)).contains("Welcome to tik tac toe, X will take first turn\n" +
-				"|---|---|---|\n" +
-				"| 1 | 2 | 3 |\n" +
-				"|-----------|\n" +
-				"| 4 | 5 | 6 |\n" +
-				"|-----------|\n" +
-				"| 7 | 8 | 9 |\n" +
-				"|---|---|---|");
 
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=1",
 				TurnResponse.class).getTurnNumber()).isEqualTo("1");

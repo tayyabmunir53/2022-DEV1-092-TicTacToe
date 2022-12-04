@@ -124,5 +124,12 @@ public class Utility {
             throw new InternalError("Turn Already Taken");
         }
     }
+
+    static void resetBoard(final String[] board) {
+        //Resetting board//
+        for (int a = 0; a < 9; a++) {
+            board[a] = String.valueOf(a + 1);
+        }
+    }
 }
 
