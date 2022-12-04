@@ -48,7 +48,16 @@ public class GameApiController {
         logger.info("Request Landed");
         logger.info("turn Value is:" + turn);
         //
+        try {
             Utility.turn(board, isXturn ? "X" : "Y", Integer.parseInt(turn));
+        } catch (InternalError e){
+
+            turnResponse.setResponseCode("04");
+            turnResponse.setResponseDescription("This Slot is already Taken, please pick another Slot");
+            turnResponse.setOutputBoard(Utility.printBoard(board));
+            turnResponse.setTurnNumber(String.valueOf(turnNumber));
+            return turnResponse;
+        }
         //
         String winner = null;
         if(turnNumber >= 4){
@@ -57,14 +66,17 @@ public class GameApiController {
 
         if (winner != null) {
             if (winner.equalsIgnoreCase("x")) {
+                turnResponse.setOutputBoard(Utility.printBoard(board));
                 turnResponse.setResponseCode("02");
                 turnResponse.setResponseDescription("X Wins");
                 return  turnResponse;
             } else if (winner.equalsIgnoreCase("y")) {
+                turnResponse.setOutputBoard(Utility.printBoard(board));
                 turnResponse.setResponseCode("03");
                 turnResponse.setResponseDescription("Y Wins");
                 return  turnResponse;
             } else if (winner.equalsIgnoreCase("draw")) {
+                turnResponse.setOutputBoard(Utility.printBoard(board));
                 turnResponse.setResponseCode("01");
                 turnResponse.setResponseDescription("draw");
                 return  turnResponse;

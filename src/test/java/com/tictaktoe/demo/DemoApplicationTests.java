@@ -65,6 +65,37 @@ public class DemoApplicationTests {
 	}
 
 
+	@Test
+	public void testPlayTurnAPIDuplicateTurn() throws Exception {
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/start",
+				String.class)).contains("Welcome to tik tac toe, X will take first turn\n" +
+				"|---|---|---|\n" +
+				"| 1 | 2 | 3 |\n" +
+				"|-----------|\n" +
+				"| 4 | 5 | 6 |\n" +
+				"|-----------|\n" +
+				"| 7 | 8 | 9 |\n" +
+				"|---|---|---|");
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=1",
+				TurnResponse.class).getTurnNumber()).isEqualTo("1");
+
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=2",
+				TurnResponse.class).getTurnNumber()).isEqualTo("2");
+
+
+
+		TurnResponse turnResponse = this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=2",
+				TurnResponse.class);
+
+		assertThat(turnResponse.getTurnNumber()).isEqualTo("2");
+		assertThat(turnResponse.getResponseDescription()).isEqualTo("This Slot is already Taken, please pick another Slot");
+
+
+	}
+
+
 
 	@Test
 	public void testStartAPI() throws Exception {

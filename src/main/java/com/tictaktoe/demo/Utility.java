@@ -121,8 +121,7 @@ public class Utility {
             }
             printBoard(board, turn);
         } else {
-            System.out.println(
-                    "Slot already taken; re-enter slot number:");
+            throw new InternalError("Turn Already Taken");
         }
     }
 }
