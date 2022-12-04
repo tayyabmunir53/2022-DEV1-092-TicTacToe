@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
+import static com.tictaktoe.demo.ResponseCode.DRAW;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -22,7 +23,7 @@ public class DemoApplicationTests {
 
 
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=6",
-				String.class)).contains("{\"outputBoard\":\"|---|---|---|\\n| 1 | 2 | 3 |\\n|-----------|\\n| 4 | 5 | X |\\n|-----------|\\n| 7 | 8 | 9 |\\n|---|---|---|\",\"responseCode\":\"00\",\"responseDescription\":\"Y Turn\",\"turnNumber\":\"1\"}");
+				String.class)).contains("{\"outputBoard\":\"|---|---|---|\\n| 1 | 2 | 3 |\\n|-----------|\\n| 4 | 5 | X |\\n|-----------|\\n| 7 | 8 | 9 |\\n|---|---|---|\",\"responseCode\":\"OK\",\"responseDescription\":\"Y Turn\",\"turnNumber\":\"1\"}");
 	}
 
 
@@ -64,7 +65,7 @@ public class DemoApplicationTests {
 		TurnResponse turnResponse =	this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=9",
 				TurnResponse.class);
 
-		assertThat(turnResponse.getResponseCode()).isEqualTo("01");
+		assertThat(turnResponse.getResponseCode()).isEqualTo(DRAW);
 		assertThat(turnResponse.getResponseDescription()).isEqualTo("draw");
 		//
 	//	assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=6",

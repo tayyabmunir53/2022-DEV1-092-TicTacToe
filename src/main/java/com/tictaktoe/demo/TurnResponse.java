@@ -7,14 +7,14 @@ public class TurnResponse {
     public TurnResponse() {
     }
 
-    public TurnResponse(String outputBoard, String responseCode, String responseDescription) {
+    public TurnResponse(String outputBoard, ResponseCode responseCode, String responseDescription) {
         this.outputBoard = outputBoard;
         this.responseCode = responseCode;
         this.responseDescription = responseDescription;
     }
 
     private String outputBoard;
-    private String responseCode;
+    private ResponseCode responseCode;
     private String responseDescription;
     private String turnNumber;
 
@@ -30,7 +30,7 @@ public class TurnResponse {
         this.outputBoard = outputBoard;
     }
 
-    public void setResponseCode(String responseCode) {
+    public void setResponseCode(ResponseCode responseCode) {
         this.responseCode = responseCode;
     }
 
@@ -42,7 +42,7 @@ public class TurnResponse {
         return outputBoard;
     }
 
-    public String getResponseCode() {
+    public ResponseCode getResponseCode() {
         return responseCode;
     }
 

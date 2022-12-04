@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.tictaktoe.demo.CommonConstants.Welcome.WELCOME_MESSAGE;
+
 @RestController
 public class GameApiController {
 
@@ -28,7 +30,7 @@ public class GameApiController {
         Utility.printBoard(this.board, turn);
 
         StringBuilder stringBuilder = new StringBuilder(2048);
-        stringBuilder.append("Welcome to tik tac toe, X will take first turn");
+        stringBuilder.append(WELCOME_MESSAGE);
         stringBuilder.append(System.lineSeparator());
         stringBuilder.append(Utility.printBoard(board));
         System.out.println(stringBuilder.toString());
@@ -41,7 +43,7 @@ public class GameApiController {
     public TurnResponse playTurn(@RequestParam(value = "turn", defaultValue = "0") String turn) {
 
         TurnResponse turnResponse = new TurnResponse();
-        turnResponse.setResponseCode("00");
+        turnResponse.setResponseCode(ResponseCode.OK);
             if(turnNumber == 0){
                 Utility.resetBoard(this.board);
             }
@@ -52,7 +54,7 @@ public class GameApiController {
             Utility.turn(board, isXturn ? "X" : "Y", Integer.parseInt(turn));
         } catch (InternalError e){
 
-            turnResponse.setResponseCode("04");
+            turnResponse.setResponseCode(ResponseCode.INTERNAL_ERROR);
             turnResponse.setResponseDescription("This Slot is already Taken, please pick another Slot");
             turnResponse.setOutputBoard(Utility.printBoard(board));
             turnResponse.setTurnNumber(String.valueOf(turnNumber));
@@ -65,20 +67,20 @@ public class GameApiController {
         }
 
         if (winner != null) {
-            if (winner.equalsIgnoreCase("x")) {
+            if (winner.equalsIgnoreCase(CommonConstants.Winner.X)) {
                 turnResponse.setOutputBoard(Utility.printBoard(board));
-                turnResponse.setResponseCode("02");
-                turnResponse.setResponseDescription("X Wins");
+                turnResponse.setResponseCode(ResponseCode.X_WINS);
+                turnResponse.setResponseDescription(CommonConstants.ResponseDescriptions.X_WINS);
                 return  turnResponse;
-            } else if (winner.equalsIgnoreCase("y")) {
+            } else if (winner.equalsIgnoreCase(CommonConstants.Winner.Y)) {
                 turnResponse.setOutputBoard(Utility.printBoard(board));
-                turnResponse.setResponseCode("03");
-                turnResponse.setResponseDescription("Y Wins");
+                turnResponse.setResponseCode(ResponseCode.Y_WINS);
+                turnResponse.setResponseDescription(CommonConstants.ResponseDescriptions.Y_WINS);
                 return  turnResponse;
-            } else if (winner.equalsIgnoreCase("draw")) {
+            } else if (winner.equalsIgnoreCase(CommonConstants.Winner.DRAW)) {
                 turnResponse.setOutputBoard(Utility.printBoard(board));
-                turnResponse.setResponseCode("01");
-                turnResponse.setResponseDescription("draw");
+                turnResponse.setResponseCode(ResponseCode.DRAW);
+                turnResponse.setResponseDescription(CommonConstants.ResponseDescriptions.DRAW);
                 return  turnResponse;
             }
         }
@@ -89,11 +91,11 @@ public class GameApiController {
         turnResponse.setTurnNumber(String.valueOf(turnNumber+= 1));
         if (isXturn){
             isXturn = false;
-            turnResponse.setResponseDescription("Y Turn");
+            turnResponse.setResponseDescription(CommonConstants.ResponseDescriptions.Y_TURN);
         }
         else{
             isXturn = true;
-            turnResponse.setResponseDescription("X Turn");
+            turnResponse.setResponseDescription(CommonConstants.ResponseDescriptions.X_TURN);
         }
         return turnResponse;
     }
