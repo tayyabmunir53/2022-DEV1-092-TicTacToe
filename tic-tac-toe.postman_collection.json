@@ -1,0 +1,141 @@
+{
+	"info": {
+		"_postman_id": "5e3f3c19-6de4-4627-b618-f3f3d2a113ff",
+		"name": "tic-tac-toe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "reset",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/start",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start"
+					]
+				},
+				"description": "it will start or restart the game, W will take first turn "
+			},
+			"response": []
+		},
+		{
+			"name": "playTurn",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/playturn?turn=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playturn"
+					],
+					"query": [
+						{
+							"key": "turn",
+							"value": "2"
+						}
+					]
+				},
+				"description": "Everyone will play the turn X will go first\n"
+			},
+			"response": [
+				{
+					"name": "X played its turn",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/playturn?turn=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"playturn"
+							],
+							"query": [
+								{
+									"key": "turn",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 04 Dec 2022 15:02:25 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"outputBoard\": \"|---|---|---|\\n| X | 2 | 3 |\\n|-----------|\\n| 4 | 5 | 6 |\\n|-----------|\\n| 7 | 8 | 9 |\\n|---|---|---|\",\n    \"responseCode\": \"OK\",\n    \"responseDescription\": \"Y Turn\",\n    \"turnNumber\": \"1\"\n}"
+				}
+			]
+		}
+	]
+}
