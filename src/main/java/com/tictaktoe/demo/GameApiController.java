@@ -14,6 +14,7 @@ import static com.tictaktoe.demo.CommonConstants.Welcome.WELCOME_MESSAGE;
 public class GameApiController {
 
     private boolean isXturn = true;
+    private boolean isDecided = false;
     private int  turnNumber = 0;
     private static final Logger logger = LoggerFactory.getLogger(GameApiController.class);
     private final Pattern patternSingleDigitNumeric = Pattern.compile("^[1-9]{1}$");
@@ -81,16 +82,22 @@ public class GameApiController {
                 turnResponse.setOutputBoard(Utility.printBoard(board));
                 turnResponse.setResponseCode(ResponseCode.X_WINS);
                 turnResponse.setResponseDescription(CommonConstants.ResponseDescriptions.X_WINS);
+                isDecided = true;
+                turnNumber = 0;
                 return  turnResponse;
             } else if (winner.equalsIgnoreCase(CommonConstants.Winner.Y)) {
                 turnResponse.setOutputBoard(Utility.printBoard(board));
                 turnResponse.setResponseCode(ResponseCode.Y_WINS);
                 turnResponse.setResponseDescription(CommonConstants.ResponseDescriptions.Y_WINS);
+                isDecided = true;
+                turnNumber = 0;
                 return  turnResponse;
             } else if (winner.equalsIgnoreCase(CommonConstants.Winner.DRAW)) {
                 turnResponse.setOutputBoard(Utility.printBoard(board));
                 turnResponse.setResponseCode(ResponseCode.DRAW);
                 turnResponse.setResponseDescription(CommonConstants.ResponseDescriptions.DRAW);
+                isDecided = true;
+                turnNumber = 0;
                 return  turnResponse;
             }
         }

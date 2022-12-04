@@ -28,7 +28,7 @@ public class DemoApplicationTests {
 
 
 	@Test
-	public void testCheckInputValidation() throws Exception {
+	public void testCheckAuthenticityOfTurns() throws Exception {
 		TurnResponse turnResponse =	this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=x",
 				TurnResponse.class);
 
@@ -71,9 +71,9 @@ public class DemoApplicationTests {
 
 		assertThat(turnResponse.getResponseCode()).isEqualTo(DRAW);
 		assertThat(turnResponse.getResponseDescription()).isEqualTo("draw");
-		//
-	//	assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=6",
-	//			TurnResponse.class).getResponseDescription()).isEqualTo("Error board full");
+		// Game Started Again after winner is decided
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/playturn?turn=6",
+				TurnResponse.class).getResponseDescription()).isEqualTo("Y Turn");
 	}
 
 
